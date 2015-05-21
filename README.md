@@ -1,6 +1,10 @@
 # Yeoman generator for BridgePhase
 
-This will serve as a scaffolding generator for BridgePhase projects. To use these locally, clone the repository and navigate to one of the `generator-*` folders. From there, execute:
+This will serve as a scaffolding generator for BridgePhase projects. 
+
+## Installing the generator module locally
+
+To use these locally, clone the repository and navigate to one of the `generator-*` folders. From there, execute:
 
 `npm install`
 
@@ -14,4 +18,10 @@ You will need Node.js, NPM (bundled with Node.js), and Yeoman to use the generat
 
 `npm install -g yeoman`
 
+## Scaffolding a new project
 
+When you want to scaffold a new project, all you need to do is navigate to a new directory and run:
+
+`yo <generator_name>` for example: `yo bridgephase-javastarter`
+
+The `<generator_name>` comes from after the word `generator-` of the `generator-*` folder.
