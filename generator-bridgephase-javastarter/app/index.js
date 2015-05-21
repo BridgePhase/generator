@@ -2,6 +2,7 @@ var generator = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var glob = require('glob');
+require('shelljs/global');
 
 var info = chalk.white;
 
@@ -21,6 +22,7 @@ module.exports = generator.Base.extend({
       }, function(answers) {
         console.log('thanks, going with: ', answers);
         this.properties.projectName = answers.projectName;
+        this.properties.packageName = answers.projectName.replace(' ', '_');
         done();
       }.bind(this));
     }
@@ -64,7 +66,7 @@ module.exports = generator.Base.extend({
           if (!found) {
             toRename.push({
               oldDirectory: name,
-              newDirectory: name.replace('foo', this.properties.projectName)
+              newDirectory: name.replace('foo', this.properties.packageName)
             });
           }
         }
@@ -72,12 +74,32 @@ module.exports = generator.Base.extend({
     },
 
     removefiles: function() {
+      var done = this.async();
       var toRename = this.properties.toRename;
       this.log(info('Updating directories to your project name'));
       for (var i = 0; i < toRename.length; i++) {
         this.log("- Renaming " + chalk.cyan(toRename[i].oldDirectory) +
         " to " + chalk.green(toRename[i].newDirectory));
         this.spawnCommand('mv', [toRename[i].oldDirectory, toRename[i].newDirectory]);
+      }
+      done();
+    },
+
+    updateGradle: function() {
+      sed('-i', /'Bridgephase MVC Starter'/,
+        '\'' + this.properties.projectName + '\'',
+        'javastarter/build.gradle');
+      sed('-i', /'BridgePhaseMVC'/,
+        '\'' + this.properties.packageName + '\'',
+        'javastarter/build.gradle');
+      var toRename = this.properties.toRename;
+      for (var i = 0; i < toRename.length; i++) {
+        var files = glob.sync(toRename[i].newDirectory + '/**', {nodir:true});
+        for (var j = 0; j < files.length; j++) {
+          sed('-i', /com\.bridgephase\.foo/g,
+            'com.bridgephase.' + this.properties.packageName,
+            files[j]);
+        }
       }
     }
   }
