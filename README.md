@@ -14,4 +14,8 @@ You will need Node.js, NPM (bundled with Node.js), and Yeoman to use the generat
 
 `npm install -g yeoman`
 
+When you want to scaffold a new project, all you need to do is navigate to a new directory and run:
 
+`yo <generator_name>` for example: `yo bridgephase-javastarter`
+
+The `<generator_name>` comes from after the word `generator-` of the `generator-*` folder.
