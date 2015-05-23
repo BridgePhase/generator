@@ -25,3 +25,4 @@ When you want to scaffold a new project, all you need to do is navigate to a new
 `yo <generator_name>` for example: `yo bridgephase-javastarter`
 
 The `<generator_name>` comes from after the word `generator-` of the `generator-*` folder.
+
